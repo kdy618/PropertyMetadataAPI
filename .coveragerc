@@ -1,0 +1,6 @@
+[run]
+source = hometapapi
+omit = 
+    tests/*
+    autoapp.py
+
