@@ -1,8 +1,14 @@
-from hometapapi.services.api_services.house_canary_api_service import HouseCanaryAPIService
+from hometapapi.repository.model.property_metadata import (
+    PropertyMetadataRequest,
+    SewerType,
+)
 from hometapapi.services.property.api_delegate_service import APIDelegateService
-from hometapapi.repository.model.property_metadata import PropertyMetadataRequest
+from hometapapi.services.third_party_api.house_canary.house_canary_api_service import (
+    HouseCanaryAPIService,
+)
 
-class PropertyMetadataService: 
+
+class PropertyMetadataService:
     def __init__(self):
         self.api_delegate = APIDelegateService()
 
@@ -13,11 +19,10 @@ class PropertyMetadataService:
         return self.api_delegate.get_property_data(request)
 
     def has_septic(self, property_metadata):
-        if property_metadata.sewer.lower() == SewerTypes.SEPTIC.value: 
+        if property_metadata.sewer == SewerType.SEPTIC:
             return True
         else:
             return False
 
-    #def has_windows(): 
-
-    #def has_bedrooms(): 
+    def get_basement_type(self, property_metadata):
+        return property_metadata.basement

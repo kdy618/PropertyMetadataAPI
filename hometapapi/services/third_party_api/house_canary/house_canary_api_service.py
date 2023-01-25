@@ -1,7 +1,14 @@
+from flask import current_app
 
-from hometapapi.repository.model.property_metadata import PropertyMetadata, SewerTypes
-#from hometapapi.services.api_services.third_party_api.house_canary.clients.mock_canary_api_client import MockCanaryApiClient
-from hometapapi.services.property.property_metadata_service import PropertyMetadataService
+from hometapapi.repository.exceptions import InvalidAddress, RateLimitException
+from hometapapi.repository.model.property_metadata import PropertyMetadata, SewerType
+from hometapapi.services.third_party_api.house_canary.clients.house_canary_api_client import (
+    HouseCanaryAPIClient,
+)
+from hometapapi.services.third_party_api.house_canary.parser.response_parser import (
+    HouseCanaryResponseParser,
+)
+
 
 class HouseCanaryAPIService:
     def __init__(self):
@@ -12,24 +19,12 @@ class HouseCanaryAPIService:
 
     def _fetch_property_by_api(self, metadata_request):
         api_response = self.api_client.fetch_property_details(metadata_request)
-        return self._parse_json_data(api_response)
+        if api_response.status_code == 403:
+            current_app.logger.warn(api_response)
+            raise InvalidAddress()
+        if api_response.status_code == 429:
+            raise RateLimitException()
+        return self._get_property_metadata(api_response.json())
 
-    def _parse_json_data(self, api_response):
-        return PropertyMetadata(
-            address = api_response.address,
-            zip_code = api_response.zip_code,
-            sewer = self._parse_sewer_type(api_response.)
-            #api_response.get("property/details", {}).get("result", {}).get("property", {}).get("sewer"),
-            #has_sewer = self._sewer_check(self.sewer)
-        )
-
-
-    def _parse_sewer_type(self, sewer_data):
-        if sewer_data.lower() == "municipal":
-            return SewerType.MUNICIPAL
-        
-        if sewer_data.lower() == "septic":
-            return SewerType.SEPTIC
-
-        if sewer_data.lower() == "storm":
-            return SewerType.STORM
+    def _get_property_metadata(self, api_response):
+        return HouseCanaryResponseParser().parse_property_details(api_response)

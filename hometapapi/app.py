@@ -6,9 +6,7 @@ import sys
 from flask import Flask, render_template
 
 from hometapapi import commands, public, user
-
 from hometapapi.api import v1
-
 from hometapapi.extensions import (
     bcrypt,
     cache,

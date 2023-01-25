@@ -23,6 +23,7 @@ CACHE_TYPE = "simple"  # Can be "memcached", "redis", etc.
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
-#HouseCanaryAPI
+# HouseCanaryAPI
 HOUSE_CANARY_API_KEY = env.str("HOUSE_CANARY_API_KEY")
 HOUSE_CANARY_API_SECRET = env.str("HOUSE_CANARY_API_SECRET")
+HOME_TAP_API_KEY = env.str("HOME_TAP_API_KEY")
