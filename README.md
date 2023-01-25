@@ -1,6 +1,6 @@
-# HomeTapApi
+# PropertyMetadataAPI 
 
-API package to retrieve home data. 
+API package to retrieve home data, specifically for retrieving house metadata based on address and zipcode. Use the url format to retrieve housing data.  
 
 ## Docker Quickstart
 
