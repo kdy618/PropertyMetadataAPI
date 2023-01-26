@@ -2,8 +2,7 @@
 """API view."""
 import logging
 
-from flask import Blueprint, current_app, jsonify, render_template, request
-from flask_login import login_required
+from flask import Blueprint, request
 
 from hometapapi.api import api_key_required
 from hometapapi.repository.controller.api.property import PropertyAPIController
@@ -24,6 +23,9 @@ debug = logging.getLogger()
 @blueprint.route("/property/sewer/septic")
 @api_key_required
 def has_septic_sewer_system():
+    """This is the main function to answer the septic system query
+    Requires Address & Zipcode
+    """
     address = request.args.get("address")
     zip_code = request.args.get("zip_code")
     return PropertyAPIController().has_septic_system(address, zip_code)
@@ -31,9 +33,9 @@ def has_septic_sewer_system():
 
 @blueprint.route("/property/sewer/septic/debug")
 def debug_septic_sewer_system():
-    # Use for debugging/troubleshooting
+    """Use for debugging/troubleshooting"""
     property_service = PropertyMetadataService()
     metadata_request = property_service.create_property_metadata_request(
         "333 N Canal St Apt 2901", "60606"
     )
-    return HouseCanaryAPIClient().fetch_property_details(metadata_request)
+    return HouseCanaryAPIClient().fetch_property_details(metadata_request).json()

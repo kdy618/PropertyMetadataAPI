@@ -2,6 +2,8 @@
 import re
 from enum import Enum
 
+from hometapapi.repository.exceptions import InvalidAddress
+
 ZIP_CODE_VALIDATION = re.compile(r"^\d{5}(?:[-\s]\d{4})?$")
 
 

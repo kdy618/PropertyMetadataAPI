@@ -10,6 +10,38 @@ from hometapapi.user.models import User
 from .factories import UserFactory
 
 
+class TestAPI:
+    """API."""
+
+    def test_api_401(self, user, testapp):
+        """API test"""
+        # Goes to homepage
+        res = testapp.get("/api/v1/property/sewer/septic", status=401)
+
+        assert res.status_code == 401
+
+    def test_api_success(self, user, testapp):
+        """API test"""
+        # Goes to homepage
+        base = "/api/v1/property/sewer/septic?"
+        res = testapp.get(
+            base + "address=7904+Verde+Springs+Dr&zip_code=89128&api_key=10987654321"
+        )
+
+        assert res.status_code == 200
+
+    def test_api_fail_with_no_address(self, user, testapp):
+        """API test"""
+        # Goes to homepage
+        base = "/api/v1/property/sewer/septic?"
+        res = testapp.get(
+            base + "address=69+Verde+Springs+Dr&zip_code=89128&api_key=10987654321",
+            status=400,
+        )
+
+        assert res.status_code == 400
+
+
 class TestLoggingIn:
     """Login."""
 

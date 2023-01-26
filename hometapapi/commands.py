@@ -31,6 +31,16 @@ def test(coverage):
 
 
 @click.command()
+def record_test():
+    """Run the tests."""
+    import pytest
+
+    args = [TEST_PATH, "--verbose", "--record-mode=once"]
+    rv = pytest.main(args)
+    exit(rv)
+
+
+@click.command()
 @click.option(
     "-f",
     "--fix-imports",

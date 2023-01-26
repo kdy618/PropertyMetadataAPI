@@ -1,6 +1,14 @@
+# -*- coding: utf-8 -*-
+"""Controller."""
+
 from flask import jsonify
 
-from hometapapi.repository.exceptions import InvalidAddress, RateLimitException
+from hometapapi.repository.exceptions import (
+    AuthenticationException,
+    InvalidAddress,
+    MissingRequiredParamException,
+    RateLimitException,
+)
 from hometapapi.services.property.property_metadata_service import (
     PropertyMetadataService,
 )
@@ -27,19 +35,15 @@ class PropertyAPIController:
                 200,
             )
         except InvalidAddress:
-            # Simple example for surfacing error from API to the controller to view
-            # We can add additional message/or info that's consumer friendly
             return (
                 jsonify(
                     {
-                        "status_code": 403,
+                        "status_code": 400,
                     }
                 ),
-                403,
+                400,
             )
         except RateLimitException:
-            # Simple example for surfacing error from API to the controller to view
-            # We can add additional message/or info that's consumer friendly
             return (
                 jsonify(
                     {
@@ -47,4 +51,22 @@ class PropertyAPIController:
                     }
                 ),
                 429,
+            )
+        except AuthenticationException:
+            return (
+                jsonify(
+                    {
+                        "status_code": 401,
+                    }
+                ),
+                401,
+            )
+        except MissingRequiredParamException:
+            return (
+                jsonify(
+                    {
+                        "status_code": 400,
+                    }
+                ),
+                400,
             )

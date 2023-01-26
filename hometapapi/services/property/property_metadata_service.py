@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+"""PropertyMetadataService, top level interface to datafetching and parsing."""
+
+
 from hometapapi.repository.model.property_metadata import (
     PropertyMetadataRequest,
     SewerType,
@@ -23,6 +27,3 @@ class PropertyMetadataService:
             return True
         else:
             return False
-
-    def get_basement_type(self, property_metadata):
-        return property_metadata.basement

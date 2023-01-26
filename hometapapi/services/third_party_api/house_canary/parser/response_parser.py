@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+"""HouseCanaryResponseParser, parses data."""
+
 from flask import current_app
 
 from hometapapi.repository.model.property_metadata import PropertyMetadata, SewerType
