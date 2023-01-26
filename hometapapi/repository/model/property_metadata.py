@@ -8,6 +8,7 @@ ZIP_CODE_VALIDATION = re.compile(r"^\d{5}(?:[-\s]\d{4})?$")
 
 
 class SewerType(Enum):
+    #These are values that Housecanary property details API passes back to the sewer property
     MUNICIPAL = "municipal"
     SEPTIC = "septic"
     STORM = "storm"

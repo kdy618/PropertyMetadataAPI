@@ -27,3 +27,4 @@ class PropertyMetadataService:
             return True
         else:
             return False
+    # As business dictates, we can add other functions that retrieves specific property data besides sewer/septic

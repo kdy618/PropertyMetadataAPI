@@ -36,6 +36,6 @@ def debug_septic_sewer_system():
     """Use for debugging/troubleshooting"""
     property_service = PropertyMetadataService()
     metadata_request = property_service.create_property_metadata_request(
-        "333 N Canal St Apt 2901", "60606"
+        "3466 Erie Shore Dr", "48162"
     )
     return HouseCanaryAPIClient().fetch_property_details(metadata_request).json()

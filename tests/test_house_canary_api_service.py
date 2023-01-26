@@ -46,15 +46,15 @@ class TestHouseCanaryAPIService:
         assert property_metadata.zip_code == "60606"
         assert property_metadata.sewer == SewerType.NONE
 
-    # Recorded the result to the cassettes, leverage the file in cassette to test the 403.
+    # Recorded the result to the cassettes, leverage the file in cassette to test exceptions.
     @pytest.mark.vcr
     def test_fetch_property_details_with_rate_limit(self):
         with pytest.raises(InvalidAddress):
             request = PropertyMetadataRequest("30293 N Canal St Apt 2901", "60606")
             service = HouseCanaryAPIService()
-            service.api_client = MonkeyPatchErrorAPIClient(400)
+            service.api_client = MonkeyPatchErrorAPIClient(403)
             response = service.get_property_data(request)
-            assert response.status_code == 400
+            assert response.status_code == 403
 
     @pytest.mark.vcr
     def test_fetch_property_details_with_rate_limit(self):

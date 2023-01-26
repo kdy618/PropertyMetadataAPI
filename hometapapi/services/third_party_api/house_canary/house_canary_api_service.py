@@ -24,6 +24,7 @@ class HouseCanaryAPIService:
         return self._fetch_property_by_api(metadata_request)
 
     def _fetch_property_by_api(self, metadata_request):
+        # Basic handling of exceptions
         api_response = self.api_client.fetch_property_details(metadata_request)
         if api_response.status_code == 403:
             raise InvalidAddress()

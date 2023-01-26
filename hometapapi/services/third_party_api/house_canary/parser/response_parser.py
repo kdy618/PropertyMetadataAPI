@@ -7,7 +7,8 @@ from hometapapi.repository.model.property_metadata import PropertyMetadata, Sewe
 
 
 class HouseCanaryResponseParser:
-    # Assuming json response object only returns 1 object in the list
+    # We can and should support bulk in the future
+    # For now, json response object only returns 1 object in the list
     def parse_property_details(self, api_response):
         current_app.logger.warn(api_response)
         return PropertyMetadata(

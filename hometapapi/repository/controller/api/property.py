@@ -30,6 +30,7 @@ class PropertyAPIController:
                     {
                         "has_septic": property_service.has_septic(property_metadata),
                         "status_code": 200,
+                        "message": "Request succeeded"
                     }
                 ),
                 200,
@@ -38,7 +39,9 @@ class PropertyAPIController:
             return (
                 jsonify(
                     {
-                        "status_code": 400,
+                        "status_code": 403,
+                        "message": "Invalid or unsupported address",
+
                     }
                 ),
                 400,
@@ -48,6 +51,7 @@ class PropertyAPIController:
                 jsonify(
                     {
                         "status_code": 429,
+                        "message": "Rate limit exceeded",
                     }
                 ),
                 429,
@@ -57,6 +61,7 @@ class PropertyAPIController:
                 jsonify(
                     {
                         "status_code": 401,
+                        "message": "Authentication issue",
                     }
                 ),
                 401,
@@ -66,6 +71,7 @@ class PropertyAPIController:
                 jsonify(
                     {
                         "status_code": 400,
+                        "message": "Missing parameters",
                     }
                 ),
                 400,
