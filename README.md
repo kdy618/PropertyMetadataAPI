@@ -37,4 +37,6 @@ To run tests:
 ```bash
 docker-compose run --rm manage test
 ```
- 
+
+# Architecture Diagram
+![SewerApi drawio](https://user-images.githubusercontent.com/8558956/215917399-df116094-cdd7-4833-99b0-a57240ecab35.png)
