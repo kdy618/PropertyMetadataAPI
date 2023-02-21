@@ -39,3 +39,16 @@ def debug_septic_sewer_system():
         "3466 Erie Shore Dr", "48162"
     )
     return HouseCanaryAPIClient().fetch_property_details(metadata_request).json()
+
+@blueprint.route("/property/api/housecanary")
+@api_key_required
+def view_house_canary_result():
+    """Use for viewing full API response object"""
+
+    address = request.args.get("address")
+    zip_code = request.args.get("zip_code")
+    property_service = PropertyMetadataService()
+    metadata_request = property_service.create_property_metadata_request(
+        address, zip_code
+    )
+    return HouseCanaryAPIClient().fetch_property_details(metadata_request).json()
